@@ -18,15 +18,12 @@ public class FlorService {
 	
 	private final WebClient webClient;
 
-//	@Autowired
-//	public FlorService(WebClient webClient) {
-//		this.webClient = webClient;
-//	}
-
 	public Mono<FlorDTO> addFlor(FlorDTO entity) {
 		Mono<FlorDTO> mono = webClient.post().uri("http://localhost:9001/flor/add")
 				.header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-				.body(Mono.just(entity), FlorDTO.class).retrieve().bodyToMono(FlorDTO.class)
+				.body(Mono.just(entity), FlorDTO.class)
+				.retrieve()
+				.bodyToMono(FlorDTO.class)
 				.timeout(Duration.ofMillis(10_000));
 		return mono;
 
@@ -37,7 +34,8 @@ public class FlorService {
 				.header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
 				.body(Mono.just(fe), FlorDTO.class)
 				.retrieve()
-				.bodyToMono(FlorDTO.class);
+				.bodyToMono(FlorDTO.class)
+				.timeout(Duration.ofMillis(10_000));
 		return mono;
 	}
 

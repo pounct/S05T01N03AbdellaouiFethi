@@ -13,8 +13,7 @@ public class WebConfig {
     WebClient webClient() { 
 
 	    WebClient webClient = WebClient.builder() 
-	      .baseUrl( "http://localhost:9001" ) 
-	      //.defaultCookie( "nom du cookie" , "valeur du cookie" ) 
+	      .baseUrl( "http://localhost:9001" )
 	      .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE) 
 	      .build();
 		return webClient; 

@@ -31,25 +31,25 @@ public class FlorController {
     	return florService.addFlor(f);
     }
     
-    @PutMapping(value = "/clientFlorsUpdate")
+    @PutMapping("/clientFlorsUpdate")
     @ResponseStatus(HttpStatus.OK)
     public Mono<FlorDTO> update(@RequestBody FlorDTO fe) {
-    	//fe.setPk_FlorID(id);
         return florService.update(fe);
     }
     
-    @DeleteMapping(value = "clientFlorsDelete/{id}")
+    @DeleteMapping("clientFlorsDelete/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Mono<Void> delete(@PathVariable("id") Integer id) {
     	return florService.delete(id);
     }
         
-    @GetMapping(value = "clientFlorsGetOne/{id}")
+    @GetMapping("clientFlorsGetOne/{id}")
+    @ResponseStatus(HttpStatus.OK)
     public Mono<FlorDTO> findById(@PathVariable("id") Integer id) {
         return florService.findById(id);
     }
     
-    @GetMapping("/clientFlorsAll")//produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    @GetMapping("/clientFlorsAll")
     @ResponseStatus(HttpStatus.OK)
     public Flux<FlorDTO> findAll() {
     	return florService.findAll();
