@@ -17,9 +17,14 @@ import reactor.core.publisher.Mono;
 public class FlorService {
 	
 	private final WebClient webClient;
+	
+//	WebClient webClient = WebClient.builder() 
+//		      .baseUrl( "http://localhost:9001/flor" )
+//		      .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE) 
+//		      .build();
 
 	public Mono<FlorDTO> addFlor(FlorDTO entity) {
-		Mono<FlorDTO> mono = webClient.post().uri("http://localhost:9001/flor/add")
+		Mono<FlorDTO> mono = webClient.post().uri("/add")
 				.header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
 				.body(Mono.just(entity), FlorDTO.class)
 				.retrieve()
@@ -30,7 +35,7 @@ public class FlorService {
 	}
 	public Mono<FlorDTO> update(FlorDTO fe) {
 		Mono<FlorDTO> mono = webClient.put()
-				.uri("http://localhost:9001/flor/update")
+				.uri("/update")
 				.header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
 				.body(Mono.just(fe), FlorDTO.class)
 				.retrieve()
@@ -39,15 +44,9 @@ public class FlorService {
 		return mono;
 	}
 
-	public Mono<FlorDTO> getFlor() {
-		Mono<FlorDTO> mono = webClient.get().uri("/getOne/{id}", 1).retrieve().bodyToMono(FlorDTO.class);
-		return mono;
-
-	}
-
 	public Flux<FlorDTO> findAll() {
 		return webClient.get()
-				.uri("http://localhost:9001/flor/getAll")
+				.uri("/getAll")
 				.retrieve()
 				.bodyToFlux(FlorDTO.class)
 				.timeout(Duration.ofMillis(10_000));
@@ -55,14 +54,14 @@ public class FlorService {
 
 	public Mono<FlorDTO> findById(Integer id) {
 		Mono<FlorDTO> mono = webClient.get()
-				.uri("http://localhost:9001/flor/getOne/{id}", id)
+				.uri("/getOne/{id}", id)
 				.retrieve().bodyToMono(FlorDTO.class);
 		return mono;
 	}
 
 	public Mono<Void> delete(Integer id) {
 		return webClient.delete()
-				.uri("http://localhost:9001/flor/delete/" +id)
+				.uri("/delete/" +id)
 				.retrieve()
 				.bodyToMono(Void.class);
 	}
